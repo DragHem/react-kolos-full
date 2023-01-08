@@ -18,23 +18,16 @@ const PersonProvider = () => {
     })();
   }, []);
 
-  const onDelete = async (personId: number | null): Promise<void> => {
+  const onDelete = async (personId: number): Promise<void> => {
     if (personId) {
       const response = await fetch(
         `http://localhost:5555/api/person/${personId}`
       );
 
       if (response.ok) {
-        const newPersonList = personList?.filter(
-          (person) => person.id !== personId
+        setPersonList((prevPersonList) =>
+          prevPersonList.filter((person) => person.id !== personId)
         );
-
-        if (newPersonList) {
-          setPersonList(newPersonList);
-          return;
-        }
-
-        setPersonList([]);
       }
     }
   };
@@ -44,13 +37,9 @@ const PersonProvider = () => {
   };
 
   const updatePerson = (person: Person): void => {
-    const newPersonList = [...personList];
+    const index = personList.findIndex((p) => p.id === person.id);
 
-    const index = newPersonList.findIndex((p) => p.id === person.id);
-
-    newPersonList.splice(index, 1, person);
-
-    setPersonList(newPersonList);
+    setPersonList((prevPersonList) => prevPersonList.splice(index, 1, person));
   };
 
   return (

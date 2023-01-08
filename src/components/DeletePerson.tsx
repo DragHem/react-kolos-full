@@ -2,12 +2,12 @@ import { ChangeEvent, useState } from "react";
 import { Person } from "../models/Person";
 
 interface Props {
-  persons: Person[] | null;
-  onDelete: (id: number | null) => Promise<void>;
+  persons: Person[];
+  onDelete: (id: number) => Promise<void>;
 }
 
 const DeletePerson = ({ persons, onDelete }: Props) => {
-  const [personId, setPersonId] = useState<number | null>(null);
+  const [personId, setPersonId] = useState<number>(persons[0].id);
 
   const changeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
     setPersonId(Number(e.target.value));
