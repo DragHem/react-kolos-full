@@ -18,10 +18,11 @@ const PersonProvider = () => {
     })();
   }, []);
 
-  const onDelete = async (personId: number): Promise<void> => {
+  const onDelete = async (personId: number | null): Promise<void> => {
     if (personId) {
       const response = await fetch(
-        `http://localhost:5555/api/person/${personId}`
+        `http://localhost:5555/api/person/${personId}`,
+        { method: "DELETE" }
       );
 
       if (response.ok) {

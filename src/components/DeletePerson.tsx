@@ -3,11 +3,11 @@ import { Person } from "../models/Person";
 
 interface Props {
   persons: Person[];
-  onDelete: (id: number) => Promise<void>;
+  onDelete: (id: number | null) => Promise<void>;
 }
 
 const DeletePerson = ({ persons, onDelete }: Props) => {
-  const [personId, setPersonId] = useState<number>(persons[0].id);
+  const [personId, setPersonId] = useState<number | null>(null);
 
   const changeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
     setPersonId(Number(e.target.value));
@@ -16,6 +16,7 @@ const DeletePerson = ({ persons, onDelete }: Props) => {
   return (
     <>
       <select onChange={changeHandler}>
+        <option value="DEFAULT">Wybierz osobę</option>
         {persons &&
           persons.map((person) => (
             <option value={person.id} key={person.id}>
